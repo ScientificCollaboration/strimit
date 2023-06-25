@@ -40,18 +40,15 @@ import requests
 
 app = FastAPI()
 
-import numpy as np
-import pandas as pd
+#BASE_DIR = Path('D:/fastapi/work/').resolve(strict=True).parent
 
 
-dfcsv1 = pd.read_csv('output_v8888.csv', sep=';', nrows=10000)
+dfcsv1 = pd.read_csv('output_v88.csv', sep=';', nrows=1000000)
 dfcsv2 = dfcsv1.fillna(0)
 pd.set_option('display.max_columns', None)
-dfcsv4 = dfcsv2
-X = dfcsv4.drop(columns=['category'])
+X = dfcsv2.drop(columns=['category'])
 Y = dfcsv2['category']
 result =  pd.concat([X, Y.reindex(X.index)], axis=1)
-#result.to_csv("output_v8888.csv")
 
 # transform a time series dataset into a supervised learning dataset
 def series_to_supervised(data, n_in=1, n_out=1, dropnan=True):
@@ -147,8 +144,8 @@ cols = list(dataset)
 # split dataset
 V = dataset.values     
 data = series_to_supervised(V, n_in=1)
-train(data[0:8000]) # - переключение!!!!!!!!!!!!!!!!
-mae, y, yhat = walk_forward_validation(data[8000:10000], 48)
+train(data[0:80000]) # - переключение!!!!!!!!!!!!!!!!
+mae, y, yhat = walk_forward_validation(data[80000:100000], 48)
 
 def convert(yhat):
     output = {"prediction":yhat}
@@ -169,7 +166,7 @@ async def predict():
     
     return {"data": data}
 if __name__ == '__main__':
-    uvicorn.run(app, host='127.0.0.1', port=8000)
+    uvicorn.run(app, host='127.0.0.1', port=8008)
 
 print(result)
 print('MAE: %.3f' % mae)
