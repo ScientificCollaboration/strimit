@@ -43,7 +43,7 @@ app = FastAPI()
 #BASE_DIR = Path('D:/fastapi/work/').resolve(strict=True).parent
 
 
-dfcsv1 = pd.read_csv('output_v88.csv', sep=';', nrows=1000000)
+dfcsv1 = pd.read_csv('output_v8888.csv', sep=';', nrows=10000)
 dfcsv2 = dfcsv1.fillna(0)
 pd.set_option('display.max_columns', None)
 X = dfcsv2.drop(columns=['category'])
@@ -144,8 +144,8 @@ cols = list(dataset)
 # split dataset
 V = dataset.values     
 data = series_to_supervised(V, n_in=1)
-train(data[0:80000]) # - переключение!!!!!!!!!!!!!!!!
-mae, y, yhat = walk_forward_validation(data[80000:100000], 48)
+train(data[0:8000]) # - переключение!!!!!!!!!!!!!!!!
+mae, y, yhat = walk_forward_validation(data[8000:10000], 48)
 
 def convert(yhat):
     output = {"prediction":yhat}
